@@ -1,0 +1,83 @@
+import { useEffect, useState } from "react";
+import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
+
+const AdminOrders = () => {
+  const { axios } = useAppContext();
+  const [orders, setOrders] = useState([]);
+
+  const fetchOrders = async () => {
+    try {
+      const { data } = await axios.get("http://localhost:5000/api/admin/orders");
+      if (data.success) {
+        setOrders(Array.isArray(data.orders) ? data.orders : []);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  return (
+    <div className="md:p-10 p-4 space-y-4">
+      <h2 className="text-lg font-medium">Admin Orders</h2>
+      {orders.length === 0 ? (
+        <p className="text-gray-500">No orders found.</p>
+      ) : (
+        orders.map((order, idx) => (
+          <div key={idx} className="flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_1fr] md:items-center gap-5 p-5 max-w-4xl rounded-md border border-gray-300 text-gray-800">
+            <div className="flex gap-5">
+              {order.items?.[0]?.product?.image?.[0] && (
+                <img
+                  className="w-12 h-12 object-cover opacity-60"
+                  src={`http://localhost:5000/images/${order.items[0].product.image[0]}`}
+                  alt="product"
+                />
+              )}
+              <div>
+                {order.items?.map((item, i) => (
+                  <div key={i} className="flex flex-col justify-center">
+                    <p className="font-medium">
+                      {item.product?.name}
+                      <span className={`text-indigo-500 ${item.quantity < 2 && "hidden"}`}> x {item.quantity}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-sm">
+              {order.address ? (
+                <>
+                  <p className="font-medium mb-1">{order.address.firstName} {order.address.lastName}</p>
+                  <p>
+                    {order.address.street}, {order.address.city}, {order.address.state}, {order.address.zipCode}, {order.address.country}
+                  </p>
+                </>
+              ) : (
+                <p className="text-gray-500">No address</p>
+              )}
+            </div>
+
+            <p className="font-medium text-base my-auto text-black/70">Rs{order.amount}</p>
+
+            <div className="flex flex-col text-sm">
+              <p>Method: {order.paymentType}</p>
+              <p>Date: {order.createdAt ? new Date(order.createdAt).toLocaleString() : "-"}</p>
+              <p>Payment: {order.isPaid ? "Paid" : "Pending"}</p>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default AdminOrders;
+
+
