@@ -65,35 +65,36 @@ const Cart = () => {
     }
   }, [products, cartItems]);
   const placeOrder = async () => {
-    try {
-      if (!selectedAddress) {
-        return toast.error("Please select an address");
-      }
-      // place order with cod
-      if (paymentOption === "COD") {
-  const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/api/order/cod`,
-    {
-      items: cartArray.map((item) => ({
-        product: item._id,
-        quantity: item.quantity,
-      })),
-      address: selectedAddress._id,
+  try {
+    if (!selectedAddress) {
+      return toast.error("Please select an address");
     }
-  );
-}
-        if (data.success) {
-          toast.success(data.message);
-          setCartItems({});
-          navigate("/my-orders");
-        } else {
-          toast.error(data.message);
+
+    // Place order with COD
+    if (paymentOption === "COD") {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/order/cod`,
+        {
+          items: cartArray.map((item) => ({
+            product: item._id,
+            quantity: item.quantity,
+          })),
+          address: selectedAddress._id,
         }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        setCartItems({});
+        navigate("/my-orders");
+      } else {
+        toast.error(data.message);
       }
-    catch (error) {
-      toast.error(error.message);
     }
-  };
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
   return products.length > 0 && cartItems ? (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
       <div className="flex-1 max-w-4xl">
