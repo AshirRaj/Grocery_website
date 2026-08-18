@@ -20,7 +20,9 @@ export const AppContextProvider = ({ children }) => {
   // check seller status
 const fetchSeller = async () => {
   try {
-    const { data } = await axios.get("http://localhost:5000/api/seller/is-auth");
+    const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/seller/is-auth`
+);
     if (data.success) {
       setIsSeller(true);
     } else {
@@ -42,7 +44,9 @@ const fetchSeller = async () => {
 // check admin status
 const fetchAdmin = async () => {
   try {
-    const { data } = await axios.get("http://localhost:5000/api/admin/is-auth");
+    const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/admin/is-auth`
+);
     if (data.success) {
       setIsAdmin(true);
     } else {
@@ -63,7 +67,9 @@ const fetchAdmin = async () => {
   // fetch user auth status ,user Data and cart items
 const fetchUser = async () => {
   try {
-    const { data } = await axios.get("http://localhost:5000/api/user/is-auth");
+    const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/user/is-auth`
+);
     if (data.success) {
       setUser(data.user);
       setCartItems(data.user.cart);
@@ -82,7 +88,9 @@ const fetchUser = async () => {
   // fetch products
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/product/list");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/product/list`
+);
       if (data.success) {
         setProducts(data.products);
       } else {
@@ -157,7 +165,10 @@ useEffect(() => {
   useEffect(() => {
     const updateCart = async () => {
       try {
-        const { data } = await axios.post("http://localhost:5000/api/cart/update", { cartItems });
+        const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/cart/update`,
+  { cartItems }
+);
 
         if (!data.success) {
           toast.error(data.message);
