@@ -36,7 +36,12 @@ app.use("/api/address", addressRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/admin", adminRoutes);
 
-
+app.get("/healthz", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "Backend is running"
+  });
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   connectDB();
