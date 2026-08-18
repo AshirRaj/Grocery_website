@@ -11,7 +11,9 @@ const Orders = () => {
   const { axios } = useContext(AppContext);
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/order/seller");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/order/seller`
+);
       if (data.success) {
         setOrders(Array.isArray(data.orders) ? data.orders : []);
       } else {
@@ -40,7 +42,7 @@ const Orders = () => {
             {order.items?.[0]?.product?.image?.[0] && (
               <img
                 className="w-12 h-12 object-cover opacity-60"
-                src={`http://localhost:5000/images/${order.items[0].product.image[0]}`}
+                src={`${import.meta.env.VITE_API_URL}/images/${order.items[0].product.image[0]}`}
                 alt="product"
               />
             )}
