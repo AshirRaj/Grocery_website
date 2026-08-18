@@ -38,7 +38,9 @@ const Cart = () => {
 
   const getAddress = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/address/get");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/address/get`
+    );
       if (data.success) {
         setAddress(data.addresses);
         if (data.addresses.length > 0) {
