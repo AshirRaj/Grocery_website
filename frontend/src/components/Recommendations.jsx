@@ -5,7 +5,7 @@ function Recommendations({ userId }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/recommend/${userId}`)
+    axios.get(`${import.meta.env.VITE_API_URL}/api/recommend/${userId}`)
       .then(res => setProducts(res.data))
       .catch(err => console.log(err));
   }, [userId]);
