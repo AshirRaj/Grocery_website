@@ -10,7 +10,9 @@ const AdminProductApproval = () => {
 
   const fetchPendingProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/pending-products");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/admin/pending-products`
+);
       if (data.success) {
         setPendingProducts(data.products);
       } else {
@@ -27,9 +29,12 @@ const AdminProductApproval = () => {
 
   const handleApprove = async (productId) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/admin/approve-product", {
-        productId
-      });
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/admin/approve-product`,
+  {
+    productId
+  }
+);
       if (data.success) {
         toast.success("Product approved successfully");
         fetchPendingProducts();
@@ -48,10 +53,13 @@ const AdminProductApproval = () => {
     }
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/admin/reject-product", {
-        productId,
-        rejectionReason
-      });
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/admin/reject-product`,
+  {
+    productId,
+    rejectionReason
+  }
+);
       if (data.success) {
         toast.success("Product rejected successfully");
         setRejectionReason("");
@@ -87,7 +95,7 @@ const AdminProductApproval = () => {
             <div key={product._id} className="border border-gray-300 rounded-lg p-4">
               <div className="flex items-start gap-4">
                 <img
-                  src={`http://localhost:5000/images/${product.image[0]}`}
+                  src={`${import.meta.env.VITE_API_URL}/images/${product.image[0]}`}
                   alt={product.name}
                   className="w-20 h-20 object-cover rounded"
                 />
