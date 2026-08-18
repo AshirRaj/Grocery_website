@@ -8,7 +8,9 @@ const SellerDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/product/seller-products");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/product/seller-products`
+);
       if (data.success) {
         setProducts(data.products);
       } else {
@@ -65,7 +67,7 @@ const SellerDashboard = () => {
               <div key={product._id} className="border border-gray-300 rounded-lg p-4">
                 <div className="flex items-start gap-4">
                   <img
-                    src={`http://localhost:5000/images/${product.image[0]}`}
+                    src={`${import.meta.env.VITE_API_URL}/images/${product.image[0]}`}
                     alt={product.name}
                     className="w-20 h-20 object-cover rounded"
                   />
