@@ -8,7 +8,9 @@ const MyOrders = () => {
   const { axios, user } = useContext(AppContext);
   const fetchOrders = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/order/user");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/order/user`
+);
       if (data.success) {
         setMyOrders(data.orders);
       } else {
@@ -49,7 +51,7 @@ const MyOrders = () => {
               <div className="flex items-center mb-4 md:mb-0">
                 <div className="p-4 rounded-lg">
                   <img
-                    src={`http://localhost:5000/images/${item.product.image[0]}`}
+                    src={`${import.meta.env.VITE_API_URL}/images/${item.product.image[0]}`}
                     alt=""
                     className="w-16 h-16"
                   />
