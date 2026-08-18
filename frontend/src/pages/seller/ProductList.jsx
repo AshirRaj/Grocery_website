@@ -9,7 +9,9 @@ const ProductList = () => {
 
   const fetchSellerProducts = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/product/seller-products");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/product/seller-products`
+);
       if (data.success) {
         setProducts(data.products);
       } else {
@@ -52,7 +54,10 @@ const ProductList = () => {
 
   const removeProduct = async (id) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/product/remove", { id });
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/product/remove`,
+  { id }
+);
       if (data.success) {
         fetchSellerProducts();
         toast.success(data.message);
@@ -70,7 +75,10 @@ const ProductList = () => {
 
   const toggleStock = async (id, inStock) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/product/stock", { id, inStock });
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/product/stock`,
+  { id, inStock }
+);
       if (data.success) {
         fetchSellerProducts();
         toast.success(data.message);
@@ -84,7 +92,10 @@ const ProductList = () => {
 
   const updateProduct = async (id, updatedData) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/product/update", { id, ...updatedData });
+      const response = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/product/update`,
+  { id, ...updatedData }
+);
       if (response.data.success) {
         fetchSellerProducts();
         toast.success(response.data.message);
@@ -211,7 +222,7 @@ const ProductList = () => {
                   <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
                     <div className="border border-gray-300 rounded p-2">
                       <img
-                        src={`http://localhost:5000/images/${product.image[0]}`}
+                        src={`${import.meta.env.VITE_API_URL}/images/${product.image[0]}`}
                         alt="Product"
                         className="w-16"
                       />
