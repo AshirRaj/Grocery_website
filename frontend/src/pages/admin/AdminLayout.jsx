@@ -14,7 +14,9 @@ const AdminLayout = () => {
 
   const logout = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/admin/logout");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/admin/logout`
+);
       if (data.success) {
         setIsAdmin(false);
         toast.success("Logged out successfully");
