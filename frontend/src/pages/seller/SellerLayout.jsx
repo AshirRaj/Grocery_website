@@ -19,7 +19,9 @@ const SellerLayout = () => {
 
   const logout = async () => {
     try {
-      const { data } = await axios.get("http://localhost:5000/api/seller/logout");
+      const { data } = await axios.get(
+  `${import.meta.env.VITE_API_URL}/api/seller/logout`
+);
       if (data.success) {
         setIsSeller(false);
         toast.success("Logged out successfully");
