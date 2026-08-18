@@ -26,7 +26,10 @@ const AddProduct = () => {
         formData.append("image", files[i]);
       }
 
-      const { data } = await axios.post("http://localhost:5000/api/product/add-product", formData);
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/product/add-product`,
+  formData
+);
       if (data.success) {
         toast.success(data.message);
         setName("");
