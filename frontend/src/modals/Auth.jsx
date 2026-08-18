@@ -11,11 +11,14 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await axios.post(`http://localhost:5000/api/user/${state}`, {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+  `${import.meta.env.VITE_API_URL}/api/user/${state}`,
+  {
+    name,
+    email,
+    password,
+  }
+);
       if (data.success) {
         toast.success(data.message);
         navigate("/");
