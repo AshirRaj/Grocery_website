@@ -71,13 +71,17 @@ const Cart = () => {
       }
       // place order with cod
       if (paymentOption === "COD") {
-        const { data } = await axios.post("http://localhost:5000/api/order/cod", {
-          items: cartArray.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
-          address: selectedAddress._id,
-        });
+  const { data } = await axios.post(
+    `${import.meta.env.VITE_API_URL}/api/order/cod`,
+    {
+      items: cartArray.map((item) => ({
+        product: item._id,
+        quantity: item.quantity,
+      })),
+      address: selectedAddress._id,
+    }
+  );
+}
         if (data.success) {
           toast.success(data.message);
           setCartItems({});
@@ -119,7 +123,7 @@ const Cart = () => {
               >
                 <img
                   className="max-w-full h-full object-cover"
-                  src={`http://localhost:5000/images/${product.image[0]}`}
+                  src={`${import.meta.env.VITE_API_URL}/images/${product.image[0]}`}
                   alt={product.name}
                 />
               </div>
