@@ -23,7 +23,9 @@ const SellerLogin = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const loginUrl = basePath === "/admin" ? "http://localhost:5000/api/admin/login" : "http://localhost:5000/api/seller/login";
+      const loginUrl = basePath === "/admin"
+  ? `${import.meta.env.VITE_API_URL}/api/admin/login`
+  : `${import.meta.env.VITE_API_URL}/api/seller/login`;
       const { data } = await axios.post(loginUrl, {
         email,
         password,
